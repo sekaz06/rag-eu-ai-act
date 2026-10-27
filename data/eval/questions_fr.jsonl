@@ -1,0 +1,5 @@
+{"id": "q001", "question": "Quelles pratiques en matière d'IA sont interdites par le règlement ?", "relevant": ["ai_act::Article 5"], "type": "factuelle"}
+{"id": "q002", "question": "Comment détermine-t-on qu'un système d'IA est à haut risque ?", "relevant": ["ai_act::Article 6"], "type": "factuelle"}
+{"id": "q003", "question": "Quelles obligations de transparence s'appliquent aux systèmes qui interagissent avec des personnes, comme les chatbots ?", "relevant": ["ai_act::Article 50"], "type": "factuelle"}
+{"id": "q004", "question": "Dans quel délai faut-il notifier une violation de données personnelles à l'autorité de contrôle ?", "relevant": ["rgpd::Article 33"], "type": "factuelle"}
+{"id": "q005", "question": "Dans quels cas une personne peut-elle obtenir l'effacement de ses données ?", "relevant": ["rgpd::Article 17"], "type": "factuelle"}

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ragbench"
+version = "0.1.0"
+description = "Hybrid RAG over the EU AI Act and GDPR, with a statistically rigorous evaluation bench"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "pypdf>=4.0",
+    "beautifulsoup4>=4.12",
+    "openai>=1.30",
+]
+
+[project.optional-dependencies]
+dense = ["sentence-transformers>=3.0"]
+app = ["streamlit>=1.35"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+all = ["ragbench[dense,app,dev]"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

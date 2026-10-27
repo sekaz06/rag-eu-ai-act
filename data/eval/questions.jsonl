@@ -1,0 +1,5 @@
+{"id": "q001", "question": "Which AI practices are prohibited under the regulation?", "relevant": ["ai_act::Article 5"], "type": "factual"}
+{"id": "q002", "question": "How is an AI system classified as high-risk?", "relevant": ["ai_act::Article 6"], "type": "factual"}
+{"id": "q003", "question": "What transparency obligations apply to AI systems that interact with people, such as chatbots?", "relevant": ["ai_act::Article 50"], "type": "factual"}
+{"id": "q004", "question": "Within what time limit must a personal data breach be notified to the supervisory authority?", "relevant": ["gdpr::Article 33"], "type": "factual"}
+{"id": "q005", "question": "In which cases can a person obtain the erasure of their personal data?", "relevant": ["gdpr::Article 17"], "type": "factual"}
