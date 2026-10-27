@@ -13,15 +13,17 @@ question set, with **bootstrap confidence intervals** and **paired significance 
 
 ```mermaid
 flowchart LR
-    A[PDF / HTML<br/>EUR-Lex] --> B[Article-level splitting<br/>+ sliding windows]
-    B --> C[(Chunks JSONL)]
-    Q[Question] --> D[BM25]
-    Q --> E[Dense<br/>bge-m3]
-    C --> D & E
-    D & E --> F[RRF fusion]
-    F --> G[Cross-encoder<br/>reranker]
-    G --> H[LLM<br/>answer + citations]
-    G -. evaluation .-> I[Recall@k · MRR · nDCG<br/>bootstrap + paired tests]
+    A["EUR-Lex PDFs"] --> B["Article-level chunking"]
+    B --> C[("Chunks")]
+    Q["User question"] --> D["BM25"]
+    Q --> E["Dense retrieval (bge)"]
+    C --> D
+    C --> E
+    D --> F["RRF fusion"]
+    E --> F
+    F --> G["Cross-encoder reranker"]
+    G --> H["LLM answer with citations"]
+    G -.-> I["Evaluation: Recall, MRR, nDCG, bootstrap CIs"]
 ```
 
 | Component | Choice | Why |
