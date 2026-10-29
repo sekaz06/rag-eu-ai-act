@@ -14,8 +14,13 @@ from collections.abc import Iterable, Iterator
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-# "Article 5", "Article 6 bis", "ARTICLE 50" at the start of a line
-ARTICLE_RE = re.compile(r"^[ \t]*(article\s+\d+(?:\s*(?:bis|ter|quater))?)\b", re.IGNORECASE | re.MULTILINE)
+# Candidate headings: "Article 5" or "ARTICLE 50" at the start of a line. Cross-references that
+# wrap onto a new line ("Article 6 of Regulation ...") also match, so candidates are filtered
+# in `find_article_headings`. "Article 5(1)" is excluded right away.
+ARTICLE_RE = re.compile(r"^[ \t]*(article\s+(\d+))\b(?!\s*\()", re.IGNORECASE | re.MULTILINE)
+# Annexes of EU regulations: "ANNEX III" alone on its line, after the last article.
+ANNEX_RE = re.compile(r"^[ \t]*(ANNEX\s+[IVXLC]+)[ \t]*$", re.MULTILINE)
+MAX_GAP = 3  # tolerate a few undetected headings before giving up on the sequence
 
 
 @dataclass
@@ -35,19 +40,66 @@ def _normalize_section(name: str) -> str:
     return name[0].upper() + name[1:].lower()
 
 
+def _is_standalone(text: str, m: re.Match) -> bool:
+    """True when the heading is alone on its line, as real article titles are in EUR-Lex texts."""
+    end = text.find("\n", m.end())
+    return not text[m.end() : end if end != -1 else len(text)].strip()
+
+
+def find_article_headings(text: str) -> list[tuple[int, str]]:
+    """Return (position, name) of the real article headings.
+
+    Articles of a regulation appear in increasing order, so we walk through the candidates and
+    only accept the next expected number (tolerating up to MAX_GAP missed headings). Among the
+    candidates for that number, one alone on its line is preferred: a candidate followed by
+    text on the same line is usually a cross-reference.
+    """
+    cands = [
+        (m.start(), int(m.group(2)), _normalize_section(m.group(1)), _is_standalone(text, m))
+        for m in ARTICLE_RE.finditer(text)
+    ]
+    if not cands:
+        return []
+
+    headings: list[tuple[int, str]] = []
+    pos = 0
+    # Start at Article 1, or (for an excerpt) at the first heading alone on its line.
+    first = next((c for c in cands if c[3]), cands[0])
+    expected = 1 if any(c[1] == 1 for c in cands) else first[1]
+    while True:
+        chosen = None
+        for num in range(expected, expected + MAX_GAP + 1):
+            pool = [c for c in cands if c[0] >= pos and c[1] == num]
+            if pool:
+                chosen = next((c for c in pool if c[3]), pool[0])
+                break
+        if chosen is None:
+            # Larger hole: resume at the next heading alone on its line with a higher number.
+            chosen = next((c for c in cands if c[0] >= pos and c[1] > expected and c[3]), None)
+        if chosen is None:
+            return headings
+        headings.append((chosen[0], chosen[2]))
+        pos, expected = chosen[0] + 1, chosen[1] + 1
+
+
 def split_sections(text: str) -> list[tuple[str, str]]:
-    """Split a document into (section_name, section_text) pairs."""
-    matches = list(ARTICLE_RE.finditer(text))
-    if not matches:
+    """Split a document into (section_name, section_text) pairs: preamble, articles, annexes."""
+    headings = find_article_headings(text)
+    if not headings:
         return [("full", text)]
 
+    last_article = headings[-1][0]
+    headings += [
+        (m.start(), "Annex " + m.group(1).split()[1]) for m in ANNEX_RE.finditer(text) if m.start() > last_article
+    ]
+
     sections: list[tuple[str, str]] = []
-    head = text[: matches[0].start()]
+    head = text[: headings[0][0]]
     if head.strip():
         sections.append(("preambule", head))
-    for i, m in enumerate(matches):
-        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
-        sections.append((_normalize_section(m.group(1)), text[m.start() : end]))
+    for i, (start, name) in enumerate(headings):
+        end = headings[i + 1][0] if i + 1 < len(headings) else len(text)
+        sections.append((name, text[start:end]))
     return sections
 
 

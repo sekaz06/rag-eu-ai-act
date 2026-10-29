@@ -29,6 +29,29 @@ def load_questions(path: Path) -> list[dict]:
     return qs
 
 
+def unknown_labels(questions: list[dict], known_keys: set[str]) -> dict[str, set[str]]:
+    """Labels that match no chunk: typos, wrong file names, or articles the chunker failed to detect."""
+    return {q["id"]: q["relevant"] - known_keys for q in questions if q["relevant"] - known_keys}
+
+
+def check_questions(questions: list[dict], chunks) -> list[dict]:
+    """Print sanity warnings and return the questions usable for retrieval metrics."""
+    known = {c.section_key for c in chunks}
+    for qid, missing in unknown_labels(questions, known).items():
+        print(f"WARNING {qid}: label(s) not found in the corpus: {sorted(missing)}")
+
+    unverified = [q["id"] for q in questions if not q.get("verified", False)]
+    if unverified:
+        print(f'WARNING {len(unverified)} question(s) not yet checked by hand ("verified": false)')
+
+    # Out-of-corpus questions have no relevant section: they test refusals at generation time,
+    # and would wrongly score 0 on every retrieval metric.
+    usable = [q for q in questions if q["relevant"]]
+    if len(usable) < len(questions):
+        print(f"Skipping {len(questions) - len(usable)} out-of-corpus question(s) for retrieval metrics")
+    return usable
+
+
 def evaluate(config: str, chunks, questions, k: int, settings) -> dict:
     retriever = build_retriever(config, chunks, settings)
     per_question, latencies = [], []
@@ -52,7 +75,7 @@ def main() -> None:
     args = ap.parse_args()
 
     chunks = load_chunks(args.chunks)
-    questions = load_questions(args.questions)
+    questions = check_questions(load_questions(args.questions), chunks)
     print(f"{len(chunks)} chunks, {len(questions)} questions, k={args.k}\n")
 
     results = {c: evaluate(c, chunks, questions, args.k, s) for c in args.configs}

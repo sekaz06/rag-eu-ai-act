@@ -10,7 +10,7 @@ import argparse
 import re
 from pathlib import Path
 
-from .chunking import chunk_document, save_chunks
+from .chunking import chunk_document, save_chunks, split_sections
 from .config import get_settings
 
 
@@ -56,7 +56,16 @@ def ingest(raw_dir: Path, out_path: Path, max_words: int, overlap: int) -> int:
     for path in files:
         text = clean(READERS[path.suffix.lower()](path))
         chunks = chunk_document(path.stem.lower(), text, max_words=max_words, overlap=overlap)
-        print(f"{path.name}: {len(text.split()):>7} words -> {len(chunks):>5} chunks")
+        names = [name for name, _ in split_sections(text)]
+        numbers = [int(n.split()[1]) for n in names if n.startswith("Article")]
+        annexes = sum(n.startswith("Annex") for n in names)
+        span = f"Articles {numbers[0]}-{numbers[-1]}" if numbers else "no article found"
+        print(f"{path.name}: {len(text.split()):>7} words -> {len(chunks):>5} chunks | {span}, {annexes} annexes")
+        # Headings are detected in sequence; a hole means a heading was missed by the PDF extraction,
+        # so its text is attached to the previous article.
+        missing = sorted(set(range(numbers[0], numbers[-1] + 1)) - set(numbers)) if numbers else []
+        if missing:
+            print(f"  WARNING articles not detected (merged into the previous one): {missing}")
         all_chunks.extend(chunks)
 
     save_chunks(all_chunks, out_path)

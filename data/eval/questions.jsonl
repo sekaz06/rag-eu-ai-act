@@ -1,5 +1,55 @@
-{"id": "q001", "question": "Which AI practices are prohibited under the regulation?", "relevant": ["ai_act::Article 5"], "type": "factual"}
-{"id": "q002", "question": "How is an AI system classified as high-risk?", "relevant": ["ai_act::Article 6"], "type": "factual"}
-{"id": "q003", "question": "What transparency obligations apply to AI systems that interact with people, such as chatbots?", "relevant": ["ai_act::Article 50"], "type": "factual"}
-{"id": "q004", "question": "Within what time limit must a personal data breach be notified to the supervisory authority?", "relevant": ["gdpr::Article 33"], "type": "factual"}
-{"id": "q005", "question": "In which cases can a person obtain the erasure of their personal data?", "relevant": ["gdpr::Article 17"], "type": "factual"}
+{"id": "a01", "question": "What is the definition of an 'AI system' under the AI Act?", "relevant": ["ai_act::Article 3"], "type": "definition", "verified": false}
+{"id": "a02", "question": "Which AI practices are prohibited under the AI Act?", "relevant": ["ai_act::Article 5"], "type": "factual", "verified": false}
+{"id": "a03", "question": "Is an employer allowed to use AI to detect the emotions of employees at work?", "relevant": ["ai_act::Article 5"], "type": "paraphrase", "verified": false}
+{"id": "a04", "question": "Can the police use live facial recognition cameras in public places?", "relevant": ["ai_act::Article 5"], "type": "paraphrase", "verified": false}
+{"id": "a05", "question": "Is it legal to build a face database by scraping photos from the internet or CCTV footage?", "relevant": ["ai_act::Article 5"], "type": "paraphrase", "verified": false}
+{"id": "a06", "question": "How is an AI system classified as high-risk?", "relevant": ["ai_act::Article 6"], "type": "factual", "verified": false}
+{"id": "a07", "question": "Under what conditions is an AI system referred to in Annex III not considered high-risk?", "relevant": ["ai_act::Article 6"], "type": "factual", "verified": false}
+{"id": "a08", "question": "What must the risk management system of a high-risk AI system include?", "relevant": ["ai_act::Article 9"], "type": "factual", "verified": false}
+{"id": "a09", "question": "What quality criteria apply to training, validation and testing data sets of high-risk AI systems?", "relevant": ["ai_act::Article 10"], "type": "factual", "verified": false}
+{"id": "a10", "question": "Do high-risk AI systems have to keep logs of their operation?", "relevant": ["ai_act::Article 12"], "type": "paraphrase", "verified": false}
+{"id": "a11", "question": "What human oversight is required for high-risk AI systems?", "relevant": ["ai_act::Article 14"], "type": "factual", "verified": false}
+{"id": "a12", "question": "What does the AI Act require regarding accuracy, robustness and cybersecurity?", "relevant": ["ai_act::Article 15"], "type": "factual", "verified": false}
+{"id": "a13", "question": "What are the obligations of deployers of high-risk AI systems?", "relevant": ["ai_act::Article 26"], "type": "factual", "verified": false}
+{"id": "a14", "question": "Who has to carry out a fundamental rights impact assessment before using a high-risk AI system?", "relevant": ["ai_act::Article 27"], "type": "factual", "verified": false}
+{"id": "a15", "question": "Do people have to be told that they are talking to a chatbot rather than a human?", "relevant": ["ai_act::Article 50"], "type": "paraphrase", "verified": false}
+{"id": "a16", "question": "Must AI-generated fake videos of real people be labelled as such?", "relevant": ["ai_act::Article 50"], "type": "paraphrase", "verified": false}
+{"id": "a17", "question": "What obligations apply to providers of general-purpose AI models?", "relevant": ["ai_act::Article 53"], "type": "factual", "verified": false}
+{"id": "a18", "question": "When is a general-purpose AI model considered to have systemic risk?", "relevant": ["ai_act::Article 51"], "type": "factual", "verified": false}
+{"id": "a19", "question": "What additional obligations apply to general-purpose AI models with systemic risk?", "relevant": ["ai_act::Article 55"], "type": "factual", "verified": false}
+{"id": "a20", "question": "What is the maximum fine for using a prohibited AI practice?", "relevant": ["ai_act::Article 99"], "type": "factual", "verified": false}
+{"id": "a21", "question": "From which dates do the different parts of the AI Act apply?", "relevant": ["ai_act::Article 113"], "type": "factual", "verified": false}
+{"id": "a22", "question": "Do companies have to train their staff to understand the AI systems they use?", "relevant": ["ai_act::Article 4"], "type": "paraphrase", "verified": false}
+{"id": "a23", "question": "Can a person affected by a decision based on a high-risk AI system ask for an explanation?", "relevant": ["ai_act::Article 86"], "type": "factual", "verified": false}
+{"id": "a24", "question": "When must a provider report a serious incident involving a high-risk AI system?", "relevant": ["ai_act::Article 73"], "type": "factual", "verified": false}
+{"id": "g01", "question": "What are the principles relating to the processing of personal data?", "relevant": ["gdpr::Article 5"], "type": "factual", "verified": false}
+{"id": "g02", "question": "What are the legal bases that make processing of personal data lawful?", "relevant": ["gdpr::Article 6"], "type": "factual", "verified": false}
+{"id": "g03", "question": "What conditions must consent meet to be valid?", "relevant": ["gdpr::Article 7"], "type": "factual", "verified": false}
+{"id": "g04", "question": "From what age can a child sign up to an online service without parental permission?", "relevant": ["gdpr::Article 8"], "type": "paraphrase", "verified": false}
+{"id": "g05", "question": "Is a company allowed to process data about someone's health or religion?", "relevant": ["gdpr::Article 9"], "type": "paraphrase", "verified": false}
+{"id": "g06", "question": "What information must be given to people when their personal data is collected from them?", "relevant": ["gdpr::Article 13"], "type": "factual", "verified": false}
+{"id": "g07", "question": "Can I ask a company for a copy of all the information it holds about me?", "relevant": ["gdpr::Article 15"], "type": "paraphrase", "verified": false}
+{"id": "g08", "question": "In which cases can a person obtain the erasure of their personal data?", "relevant": ["gdpr::Article 17"], "type": "factual", "verified": false}
+{"id": "g09", "question": "Can I take my data from one online service and move it to a competitor?", "relevant": ["gdpr::Article 20"], "type": "paraphrase", "verified": false}
+{"id": "g10", "question": "Can a person object to the use of their data for direct marketing?", "relevant": ["gdpr::Article 21"], "type": "factual", "verified": false}
+{"id": "g11", "question": "Can a bank refuse my loan application based only on an algorithm, with no human involved?", "relevant": ["gdpr::Article 22"], "type": "paraphrase", "verified": false}
+{"id": "g12", "question": "What does data protection by design and by default mean?", "relevant": ["gdpr::Article 25"], "type": "definition", "verified": false}
+{"id": "g13", "question": "What must a contract between a controller and a processor contain?", "relevant": ["gdpr::Article 28"], "type": "factual", "verified": false}
+{"id": "g14", "question": "Which organisations must keep a record of their processing activities?", "relevant": ["gdpr::Article 30"], "type": "factual", "verified": false}
+{"id": "g15", "question": "What security measures must a controller implement to protect personal data?", "relevant": ["gdpr::Article 32"], "type": "factual", "verified": false}
+{"id": "g16", "question": "Within what time limit must a personal data breach be notified to the supervisory authority?", "relevant": ["gdpr::Article 33"], "type": "factual", "verified": false}
+{"id": "g17", "question": "When must a company inform its customers that their data has been leaked?", "relevant": ["gdpr::Article 34"], "type": "paraphrase", "verified": false}
+{"id": "g18", "question": "When is a data protection impact assessment required?", "relevant": ["gdpr::Article 35"], "type": "factual", "verified": false}
+{"id": "g19", "question": "When must an organisation appoint a data protection officer?", "relevant": ["gdpr::Article 37"], "type": "factual", "verified": false}
+{"id": "g20", "question": "Can personal data be transferred to a country outside the European Union?", "relevant": ["gdpr::Article 44", "gdpr::Article 45", "gdpr::Article 46"], "type": "multi_article", "verified": false}
+{"id": "g21", "question": "What are the maximum administrative fines under the GDPR?", "relevant": ["gdpr::Article 83"], "type": "factual", "verified": false}
+{"id": "g22", "question": "Does the GDPR apply to a company based outside the EU?", "relevant": ["gdpr::Article 3"], "type": "paraphrase", "verified": false}
+{"id": "g23", "question": "How long does a controller have to respond to a request from a data subject?", "relevant": ["gdpr::Article 12"], "type": "factual", "verified": false}
+{"id": "x01", "question": "Compare the maximum fines under the AI Act and under the GDPR.", "relevant": ["ai_act::Article 99", "gdpr::Article 83"], "type": "multi_article", "verified": false}
+{"id": "x02", "question": "What rights do individuals have regarding automated decisions under the GDPR and the AI Act?", "relevant": ["gdpr::Article 22", "ai_act::Article 86"], "type": "multi_article", "verified": false}
+{"id": "x03", "question": "Which impact assessments may be needed before deploying a high-risk AI system that processes personal data?", "relevant": ["ai_act::Article 26", "ai_act::Article 27", "gdpr::Article 35"], "type": "multi_article", "verified": false}
+{"id": "o01", "question": "What fines can be imposed on very large online platforms under the Digital Services Act?", "relevant": [], "type": "out_of_corpus", "verified": false}
+{"id": "o02", "question": "How long does copyright protection last for software?", "relevant": [], "type": "out_of_corpus", "verified": false}
+{"id": "o03", "question": "What rights does the California Consumer Privacy Act give to consumers?", "relevant": [], "type": "out_of_corpus", "verified": false}
+{"id": "o04", "question": "What is the corporate income tax rate in France?", "relevant": [], "type": "out_of_corpus", "verified": false}
+{"id": "o05", "question": "Which company won the first EU contract for an AI regulatory sandbox?", "relevant": [], "type": "out_of_corpus", "verified": false}
