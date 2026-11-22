@@ -10,7 +10,7 @@ from .config import Settings, get_settings
 from .generate import Answer, generate_answer
 from .retrieval import BM25Retriever, DenseRetriever, HybridRetriever, RerankedRetriever, Retriever
 
-CONFIGS = ("bm25", "dense", "hybrid", "hybrid_rerank")
+CONFIGS = ("bm25", "dense", "hybrid", "hybrid_rerank", "dense_rerank")
 
 
 def build_retriever(name: str, chunks: Sequence[Chunk], s: Settings) -> Retriever:
@@ -24,9 +24,12 @@ def build_retriever(name: str, chunks: Sequence[Chunk], s: Settings) -> Retrieve
             n_candidates=s.n_candidates,
             rrf_k=s.rrf_k,
         )
-    if name == "hybrid_rerank":
+    if name in ("hybrid_rerank", "dense_rerank"):
+        # The cross-encoder reorders the top n_candidates of a first-stage retriever:
+        # the hybrid fusion, or the dense retriever alone.
+        first_stage = name.removesuffix("_rerank")
         return RerankedRetriever(
-            build_retriever("hybrid", chunks, s), chunks, s.reranker_model, n_candidates=s.n_candidates
+            build_retriever(first_stage, chunks, s), chunks, s.reranker_model, n_candidates=s.n_candidates
         )
     raise ValueError(f"Unknown config {name!r}, expected one of {CONFIGS}")
 
