@@ -9,7 +9,7 @@ st.title("⚖️ EU AI Act & GDPR Assistant")
 st.caption("Hybrid RAG (BM25 + dense + reranking) — every answer cites its sources.")
 
 with st.sidebar:
-    config = st.selectbox("Retrieval configuration", CONFIGS, index=CONFIGS.index("dense")
+    config = st.selectbox("Retrieval configuration", CONFIGS, index=CONFIGS.index("dense"))
     k = st.slider("Number of passages", 1, 10, 5)
 
 question = st.text_input("Your question", placeholder="Which AI practices are prohibited under the AI Act?")
